@@ -1,9 +1,11 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import os
 
-# Load model yang sudah disimpan
-model = joblib.load('model_tb.pkl')
+# Load model yang sudah disimpan dengan jalur dinamis
+model_path = os.path.join(os.path.dirname(__file__), 'model_tb.pkl')
+model = joblib.load(model_path)
 
 st.title("Prediksi Risiko Tuberculosis (TB)")
 
@@ -16,8 +18,8 @@ ibu_hamil = st.selectbox("Apakah pasien ibu hamil?", options=["YA", "TIDAK"])
 perokok = st.selectbox("Apakah pasien perokok?", options=["YA", "TIDAK"])
 
 # Mapping input ke angka
-map_jenis_kelamin = {"Laki-Laki":1, "Perempuan":0}
-map_binary = {"YA":1, "TIDAK":0}
+map_jenis_kelamin = {"Laki-Laki": 1, "Perempuan": 0}
+map_binary = {"YA": 1, "TIDAK": 0}
 
 data_input = pd.DataFrame({
     'Jenis Kelamin': [map_jenis_kelamin[jenis_kelamin]],
